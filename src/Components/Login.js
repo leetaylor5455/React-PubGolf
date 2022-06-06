@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Dialogue from './Dialogue';
 import Title from './Title';
 import TextInput from './TextInput';
@@ -26,11 +26,18 @@ export default function Login(props) {
         });
 
         if (res.data.jwt) {
-            props.setJwt(res.data.jwt);
+            // Save jwt as cookie
+            props.setJwtCookie(res.data.jwt);
 
-            if (res.data.game) return props.setGame(res.data.game);
+            if (res.data.game) {
+                // jwt and game return -> stage 4: in progress
+                props.setStage(4);
+                return props.setGame(res.data.game);
+            }
 
-            return;
+            // Just jwt returned -> stage 2: teams setup
+            props.setStage(1);
+            return props.setJwt(res.data.jwt);
         }
     }
 
@@ -46,7 +53,7 @@ export default function Login(props) {
                 />
             }/>
 
-            <Button text='Submit' color={'var(--greenBright)'} spacing='22vh' onClick={loginRequest}/>
+            <Button text='Submit' color={'var(--greenBright)'} spacing='26vh' onClick={loginRequest}/>
         </div>
     )
 }

@@ -7,7 +7,7 @@
   --greenLight: #56FFB5;
   --greenDark: #26342E;
   --red: #FF4D4D;
-  --margin: 16px;
+  --margin: 14px;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@1,700&family=Lexend:wght@300;400;700;800&display=swap');
@@ -93,8 +93,8 @@ header {
 }
 
 .button {
-  position: fixed;
-  bottom: 10vh;
+  /* position: fixed;
+  bottom: 10vh; */
   margin: var(--margin);
   padding: 16px 0 20px 0;
   width: calc(100% - var(--margin)*2);
@@ -103,4 +103,93 @@ header {
   font-weight: 800;
   text-align: center;
   border-radius: 8px;
+}
+
+.par-select {
+  margin-top: 24px;
+  font-size: 24px;
+}
+
+.par-select-buttons {
+  width: 100%;
+  display: flex;
+  margin: 16px 0 -12px 0;
+}
+
+.par-select-button {
+  font-size: 34px;
+  margin-right: 12px; 
+  padding: 8px 0;
+  font-weight: bold;
+  text-align: center;
+  background-color: var(--greyDark);
+  border-radius: 6px;
+  flex-grow: 1;
+}
+
+.par-select-button:last-child { margin-right: 0 }
+
+.summary-teams, .summary-holes {
+  margin: 64px var(--margin) 0 var(--margin);
+}
+
+.small-heading {
+  font-size: 20px;
+  letter-spacing: -6%;
+  margin-bottom: 12px;
+}
+
+.summary-team-item {
+  font-size: 24px;
+  letter-spacing: -3.5%;
+  background-color: var(--greyLight);
+  border-radius: 8px;
+  padding: 10px 12px 15px 12px;
+  margin-bottom: 16px;
+}
+
+.summary-hole-item {
+  display: flex;
+  background-color: var(--greyLight);
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.summary-hole-item-number {
+  width: 42px;
+  text-align: center;
+  line-height: 86px;
+  font-size: 36px;
+  font-weight: 500;
+  background-color: var(--greyDark);
+  border-radius: 8px 0 0 8px;
+  padding: 9px 0;
+}
+
+.summary-hole-item-middle {
+  margin-top: 14px;
+}
+
+.summary-hole-item-info {
+  font-size: 22px;
+  margin: 0 0 18px 12px;
+}
+
+.summary-hole-item-info:last-child {
+  margin-bottom: 0;
+}
+
+.summary-hole-item-par {
+  font-size: 42px;
+  font-weight: 500;
+  flex-grow: 1;
+  text-align: right;
+  padding-right: 16px;
+  line-height: 96px;
+}
+
+.par-subscript {
+  font-size: 16px;
+  font-weight: 300;
+  margin-right: 4px;
 }
