@@ -7,7 +7,7 @@ export default function Dialogue(props) {
         }}
         onClick={props.onClick}>
             <div className="dialogue-title">{props.title}</div>
-            <div className='dialogue-content'>{props.content}</div>
+            <div className='dialogue-content'>{props.children}</div>
         </div>
     )
 }

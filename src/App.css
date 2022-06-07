@@ -7,7 +7,8 @@
   --greenLight: #56FFB5;
   --greenDark: #26342E;
   --red: #FF4D4D;
-  --margin: 14px;
+  --redLight: #FF7070;
+  --margin: 12px;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@1,700&family=Lexend:wght@300;400;700;800&display=swap');
@@ -192,4 +193,126 @@ header {
   font-size: 16px;
   font-weight: 300;
   margin-right: 4px;
+}
+
+.hole-info {
+  margin-top: 84px;
+}
+
+.hole-info-row {
+  height: 34px;
+  padding: 0 var(--margin);
+  display: flex;
+  border-bottom: 1px solid white;
+}
+
+.hole-info-row:first-child {
+  border-top: 1px solid white;
+}
+
+.hole-info-label {
+  font-size: 20px;
+  letter-spacing: -6%;
+  line-height: 34px;
+}
+
+.hole-info-segment {
+  font-size: 22px;
+  text-transform: uppercase;
+  font-weight: bold;
+  flex-grow: 1;
+  text-align: right;
+  line-height: 34px;
+}
+
+.score-controls {
+  margin: 76px var(--margin) 0 var(--margin);
+}
+
+.score-control-item {
+  display: flex;
+  background-color: var(--greyLight);
+  min-height: 64px;
+  border-radius: 8px;
+  margin-bottom: 18px;
+}
+
+.score-control-item-position {
+  font-size: 24px;
+  line-height: 64px;
+  font-weight: bold;
+  margin-left: 8px;
+}
+
+.score-control-item-name {
+  font-size: 22px;
+  line-height: 64px;
+  margin-left: 12px;
+}
+
+.score-control-item-controls {
+  display: flex;
+  flex-grow: 1;
+  justify-content: right;
+  align-items: center;
+  font-size: 28px;
+  font-weight: bold;
+  line-height: 64px;
+  margin-right: 10px;
+}
+
+.score-control-item-plus, .score-control-item-minus {
+  width: 42px;
+  height: 42px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 4px;
+}
+
+.score-control-item-plus {
+  background-color: var(--red);
+}
+
+.score-control-item-minus {
+  background-color: var(--greenBright);
+}
+
+.score-control-item-score {
+  padding: 0 12px;
+}
+
+.scoreboard-container {
+  margin: 80px var(--margin) 0 var(--margin);
+}
+
+.scoreboard-item {
+  display: flex;
+  height: 60px;
+  line-height: 60px;
+  font-size: 24px;
+  letter-spacing: -3.5%;
+  font-weight: 500;
+  background-color: var(--greyLight);
+  border-radius: 8px;
+  padding: 0 12px;
+  margin-bottom: 18px;
+}
+
+.scoreboard-item:first-child {
+  background-color: var(--greenDark);
+  color: var(--greenLight);
+  box-shadow: rgba(2, 2, 2, 0.2) 0px 3px 8px 0px;
+  font-weight: bold;
+}
+
+.scoreboard-item:last-child {
+  color: var(--redLight);
+  font-weight: bold;
+}
+
+.scoreboard-score {
+  flex-grow: 1;
+  text-align: right;
+  font-size: 32px;
+  font-weight: bold;
 }

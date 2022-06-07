@@ -13,7 +13,7 @@ let currentHoleIndex = 0;
 
 export default function HolesSetup(props) {
 
-    const [slides, setSlides] = useState([]);
+    // const [slides, setSlides] = useState([]);
     const [course, setCourse, courseRef] = useState(props.course);
     // courseRef.current = props.course;
 
@@ -22,8 +22,6 @@ export default function HolesSetup(props) {
             && courseRef.current[holeIndex].location 
             && courseRef.current[holeIndex].drink 
             && courseRef.current[holeIndex].par) {
-                console.log('new hole')
-                pushHoleEntryDialogue(holeIndex+1);
                 setCourse(prevState => [...prevState, { location: '', drink: '', par: 0 }])
         }
     }
@@ -36,7 +34,6 @@ export default function HolesSetup(props) {
 
         props.setCourse(cleaned);
 
-        console.log(cleaned);
         // If cleaned array has at least 2 teams, go to holes setup
         if (cleaned.length > 1) return props.setStage(3); 
     }
@@ -56,7 +53,8 @@ export default function HolesSetup(props) {
                 { 
                     location: prevState[holeIndex].location,
                     drink: textInput,
-                    par: prevState[holeIndex].par
+                    par: prevState[holeIndex].par,
+                    index: holeIndex
                 },
                 ...prevState.slice(holeIndex+1)
             ]);
@@ -67,7 +65,8 @@ export default function HolesSetup(props) {
                 { 
                     location: textInput,
                     drink: prevState[holeIndex].drink,
-                    par: prevState[holeIndex].par
+                    par: prevState[holeIndex].par,
+                    index: holeIndex
                 },
                 ...prevState.slice(holeIndex+1)
             ]);
@@ -91,86 +90,13 @@ export default function HolesSetup(props) {
                 { 
                     location: prevState[holeIndex].location,
                     drink: prevState[holeIndex].drink,
-                    par: parseInt(value)
+                    par: parseInt(value),
+                    index: holeIndex
                 },
             ...prevState.slice(holeIndex+1)
         ]);
 
     }
-
-    const ParSelect = (props) => {
-
-        const holeIndex = props.holeindex;
-        const [selectedItem, selectItem] = useState(0);
-
-        const SelectButton = (props) => {
-
-            const holeIndex = props.holeindex;
-
-            return <div className='par-select-button'
-                key={props.number*100}
-                onClick={(e) => {
-                    selectItem(props.number);
-                    onParButtonClick(e);
-                }}
-                holeindex={holeIndex}
-                number={props.number}
-                style={{ backgroundColor: props.selectedItem == props.number
-                    ? 'var(--greenBright)'
-                    : 'var(--greyDark)',
-                }}
-            >
-                {props.number}
-            </div>
-        }
-        
-        return <div className='par-select'>
-            <div className='par-select-title'>Par</div>
-            <div className='par-select-buttons'>
-                <SelectButton number={1} holeindex={holeIndex} selectedItem={selectedItem} selectItem={selectItem}/>
-                <SelectButton number={2} holeindex={holeIndex} selectedItem={selectedItem} selectItem={selectItem}/>
-                <SelectButton number={3} holeindex={holeIndex} selectedItem={selectedItem} selectItem={selectItem}/>
-                <SelectButton number={4} holeindex={holeIndex} selectedItem={selectedItem} selectItem={selectItem}/>
-                <SelectButton number={5} holeindex={holeIndex} selectedItem={selectedItem} selectItem={selectItem}/>
-            </div>
-        </div>
-    }
-
-    const HoleEntryDialogue = (props) => {
-        return <Dialogue 
-            title={'Hole ' + parseInt(props.index+1)}
-            content={
-                <div>
-                    <TextInput type='text' placeholder='Location' 
-                        holeindex={props.index} 
-                        onInput={onTextInput} 
-                        location='true'
-                        style={{ marginTop: '-10px' }}
-                    />
-                    <TextInput type='text' placeholder='Drink' 
-                        holeindex={props.index} 
-                        onInput={onTextInput} 
-                        drink='true'
-                        style={{ marginTop: '25px' }}
-                    />
-                    <ParSelect holeindex={props.index}/>
-                </div>
-            }
-        />
-    }
-
-    const pushHoleEntryDialogue = (index) => {
-        setSlides(prevState => [...prevState,
-            <SwiperSlide key={index}>
-                <HoleEntryDialogue index={index}/>
-                <SwipeToAdd index={index}/>
-            </SwiperSlide>
-        ]);
-    }
-
-    useEffect(() => {
-        pushHoleEntryDialogue(0);
-    }, []);
 
 
     return (
@@ -184,7 +110,56 @@ export default function HolesSetup(props) {
                 // onSwiper={(swiper) => console.log(swiper)}
                 style={{ marginTop: '10vh' }}
             >
-                {slides}
+
+                {course.map((hole, index) => {
+                    const holeIndex = index;
+                    const holePar = hole.par;
+                    return (
+                    <SwiperSlide key={'holeslide'+index}>
+                        <Dialogue title={'Hole ' + parseInt(index+1)} key={'holedialogue'+index}>
+                            <TextInput type='text' placeholder='Location' 
+                                key={'location'+index}
+                                holeindex={index} 
+                                onInput={onTextInput} 
+                                location='true'
+                                style={{ marginTop: '-10px' }}
+                                value={hole.location}
+                            />
+                            <TextInput type='text' placeholder='Drink'
+                                key={'drink'+index} 
+                                holeindex={index} 
+                                onInput={onTextInput} 
+                                drink='true'
+                                style={{ marginTop: '25px' }}
+                                value={hole.drink}
+                            />
+                            <div className='par-select'>
+                                <div className='par-select-title'>Par</div>
+                                <div className='par-select-buttons'>
+                                    {[1,2,3,4,5].map((par) => (
+                                        <div className='par-select-button'
+                                            key={'parselect'+holeIndex+par}
+                                            onClick={(e) => {
+                                                onParButtonClick(e);
+                                            }}
+                                            holeindex={holeIndex}
+                                            number={par}
+                                            style={{ backgroundColor: holePar == par
+                                                ? 'var(--greenBright)'
+                                                : 'var(--greyDark)',
+                                            }}
+                                        >
+                                            {par}
+                                        </div>
+                                    ))}
+                                   </div>
+                            </div>
+                            {/* <ParSelect key={'parselect'+index} holeindex={index}/> */}
+                        </Dialogue>
+                        <SwipeToAdd/>
+                    </SwiperSlide>
+                    
+                )})}
 
             </Swiper>
 

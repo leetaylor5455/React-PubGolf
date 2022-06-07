@@ -10,8 +10,8 @@ export default function SetupSummary(props) {
 
         <div className='summary-teams'>
             <div className='small-heading'>Teams</div>
-            {props.teams.map(team => (
-                <div className='summary-team-item'>
+            {props.teams.map((team, index) => (
+                <div className='summary-team-item' key={index*21}>
                     {team.name}
                 </div> 
             ))}
@@ -20,7 +20,7 @@ export default function SetupSummary(props) {
         <div className='summary-holes'>
             <div className='small-heading'>Holes</div>
             {props.course.map((hole, index) => (
-                <div className='summary-hole-item'>
+                <div className='summary-hole-item' key={index*32}>
                     <div className='summary-hole-item-number'>{index+1}</div>
                     <div className='summary-hole-item-middle'>
                         <div className='summary-hole-item-info'>{hole.location}</div>
@@ -31,8 +31,11 @@ export default function SetupSummary(props) {
             ))}
         </div>
 
-        <Button text='Start' color='var(--greenBright)' spacing='96px'/>
-        <Button text='Edit Teams' color='var(--red)' spacing='38px'/>
-        <Button text='Edit Course' color='var(--red)' spacing='38px'/>
+        <Button text='Start' color='var(--greenBright)' spacing='96px'
+            onClick={() => { props.submitGame() }}
+        />
+        <Button text='Edit' color='var(--red)' spacing='38px'
+            onClick={() => { props.setStage(1) }}
+        />
     </div>
 }

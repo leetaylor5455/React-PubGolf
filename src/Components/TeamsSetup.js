@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import useState from 'react-usestateref';
 import Title from './Title';
 import Button from './Button';
 import Dialogue from './Dialogue';
@@ -11,7 +12,7 @@ let lastTeamIndex = 0;
 
 export default function Setup(props) {
 
-    const [slides, setSlides] = useState([]);
+    const [teams, setTeams, teamsRef] = useState(props.teams);
 
     const onTeamInput = (e) => {
         const index = parseInt(e.target.getAttribute('teamindex'));
@@ -20,7 +21,7 @@ export default function Setup(props) {
         // If text is in final slide
         if (input && index == lastTeamIndex) {
             props.setTeams(prevState => { return [...prevState, { name: '' }] });
-            pushTeamEntryDialogue(index+1);
+            // pushTeamEntryDialogue(index+1);
         }
 
         props.setTeams(prevState => {
@@ -35,25 +36,9 @@ export default function Setup(props) {
     // When teams state changes, update last index global var
     useEffect(() => {
         lastTeamIndex = props.teams.length-1;
-        // console.log(props.teams);
+        setTeams(props.teams);
     }, [props.teams])
 
-    // Dialogue box for team entry
-    const TeamEntryDialogue = (props) => {
-        return <Dialogue 
-            title='New Team'
-            content={<TextInput type='text' placeholder='Team Name' teamindex={props.index} onInput={onTeamInput}/>}
-        />
-    } 
-
-    const pushTeamEntryDialogue = (index) => {
-        setSlides(prevState => [...prevState,
-            <SwiperSlide key={index}>
-                {<TeamEntryDialogue index={index}/>}
-                {<SwipeToAdd index={index}/>}
-            </SwiperSlide>
-        ]);
-    }
 
     const submitTeams = () => {
         // Remove empty name items
@@ -64,8 +49,6 @@ export default function Setup(props) {
         // If cleaned array has at least 2 teams, go to holes setup
         if (cleaned.length > 1) return props.setStage(2); 
     }
-
-    useEffect(() => { pushTeamEntryDialogue(0) }, []);
 
 
     return (
@@ -79,11 +62,23 @@ export default function Setup(props) {
                 // onSwiper={(swiper) => console.log(swiper)}
                 style={{ marginTop: '15vh' }}
             >
-                {slides}
+                {teams.map((team, index) => (
+                    <SwiperSlide key={'slide'+index}>
+                        <Dialogue
+                            key={'dialogue'+props.index}
+                            title='New Team'>
+
+                                <TextInput key={'teaminput'+index} type='text' placeholder='Team Name' 
+                                teamindex={index} onInput={onTeamInput} value={team.name}/>
+                        
+                            </Dialogue>
+                        <SwipeToAdd />
+                    </SwiperSlide>
+                ))}
 
             </Swiper>
 
-            <Button text='safe' spacing='23vh' color={props.teams.length > 2
+            <Button text='safe' spacing='23vh' color={teamsRef.current.length >= 2
                 ? 'var(--greenBright)'
                 : 'var(--greyLight)'
             }
