@@ -20,11 +20,11 @@ export default function Setup(props) {
 
         // If text is in final slide
         if (input && index == lastTeamIndex) {
-            props.setTeams(prevState => { return [...prevState, { name: '' }] });
+            setTeams(prevState => { return [...prevState, { name: '' }] });
             // pushTeamEntryDialogue(index+1);
         }
 
-        props.setTeams(prevState => {
+        setTeams(prevState => {
             return [
                 ...prevState.slice(0, index),
                 { name: input },
@@ -35,16 +35,17 @@ export default function Setup(props) {
 
     // When teams state changes, update last index global var
     useEffect(() => {
-        lastTeamIndex = props.teams.length-1;
+        lastTeamIndex = teamsRef.current.length-1;
         // setTeams(props.teams);
-    }, [props.teams])
+    }, [teams])
 
 
     const submitTeams = () => {
         // Remove empty name items
-        props.setTeams(props.teams.filter(team => team.name));
+        const cleaned = teams.filter(team => team.name);
 
-        const cleaned = props.teams.filter(team => team.name);
+        props.setTeams(cleaned);
+
 
         // If cleaned array has at least 2 teams, go to holes setup
         if (cleaned.length > 1) return props.setStage(2); 
@@ -62,7 +63,7 @@ export default function Setup(props) {
                 // onSwiper={(swiper) => console.log(swiper)}
                 style={{ marginTop: '15vh' }}
             >
-                {props.teams.map((team, index) => (
+                {teams.map((team, index) => (
                     <SwiperSlide key={'slide'+index}>
                         <Dialogue
                             key={'dialogue'+props.index}
@@ -78,7 +79,7 @@ export default function Setup(props) {
 
             </Swiper>
 
-            <Button text='safe' spacing='23vh' color={props.teams.length >= 2
+            <Button text='safe' spacing='23vh' color={teamsRef.current.length >= 2
                 ? 'var(--greenBright)'
                 : 'var(--greyLight)'
             }
