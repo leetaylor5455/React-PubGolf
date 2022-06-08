@@ -36,7 +36,7 @@ export default function Setup(props) {
     // When teams state changes, update last index global var
     useEffect(() => {
         lastTeamIndex = props.teams.length-1;
-        setTeams(props.teams);
+        // setTeams(props.teams);
     }, [props.teams])
 
 
@@ -62,7 +62,7 @@ export default function Setup(props) {
                 // onSwiper={(swiper) => console.log(swiper)}
                 style={{ marginTop: '15vh' }}
             >
-                {teams.map((team, index) => (
+                {props.teams.map((team, index) => (
                     <SwiperSlide key={'slide'+index}>
                         <Dialogue
                             key={'dialogue'+props.index}
@@ -78,7 +78,7 @@ export default function Setup(props) {
 
             </Swiper>
 
-            <Button text='safe' spacing='23vh' color={teamsRef.current.length >= 2
+            <Button text='safe' spacing='23vh' color={props.teams.length >= 2
                 ? 'var(--greenBright)'
                 : 'var(--greyLight)'
             }

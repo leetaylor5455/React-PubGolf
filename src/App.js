@@ -17,11 +17,13 @@ import axios from 'axios';
 
 const Constants = {
   URL: 'https://node-pubgolf.herokuapp.com/api'
+//   URL: 'http://localhost:8080/api'
 }
 
 export function App() {
 
 	let ws = new WebSocket('wss://node-pubgolf.herokuapp.com/');
+	// let ws = new WebSocket('ws://localhost:8080/');
 
 	const navigate = useNavigate();
 	const navigateToAdmin = useCallback(() => navigate('/admin', { replace: true }), [navigate])
