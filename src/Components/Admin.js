@@ -11,12 +11,10 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
-export default function Admin() {
+export default function Admin(props) {
 
-    let ws = new WebSocket('ws://localhost:8080/');
-    let jwtCookie;
     const [jwt, setJwt] = useState('');
-    const [game, setGame, gameRef] = useState();
+    // const [game, setGame, gameRef] = useState(props.game);
 
     const setJwtCookie = (jwt) => {
         cookies.set('jwt', jwt);
@@ -24,7 +22,7 @@ export default function Admin() {
 
     useEffect(() => {
         const verifyJwt = async () => {
-            jwtCookie = cookies.get('jwt');
+            let jwtCookie = cookies.get('jwt');
 
             if (jwtCookie) {
                 const res = await axios({
@@ -36,36 +34,40 @@ export default function Admin() {
                 });
     
                 if (res.data.jwt) setJwt(res.data.jwt);
-                if (res.data.game) setGame(res.data.game);
+                if (res.data.game) {
+                    props.setGame(res.data.game);
+                    // setGame(res.data.game);
+                };
             }
         }
         verifyJwt(); 
 
 
         // Begin socket
-        ws.onopen = () => {
+        props.ws.onopen = () => {
             console.log('ws open')
         }
 
-        ws.onmessage = (event) => {
+        props.ws.onmessage = (event) => {
             const res = JSON.parse(event.data);
             console.log(res);
-            setGame(res);
+            props.setGame(res);
+            // setGame(res);
         }
 
     }, []);
 
     useEffect(() => {
-        if (jwt && !game) setStage(1);
-        if (jwt && game && !game.complete) {
+        if (jwt && !props.game) setStage(1);
+        if (jwt && props.game && !props.game.complete) {
             setStage(4);
         }
 
-        if (game) {
-            if (game.complete) setStage(5);
+        if (props.game) {
+            if (props.game.complete) setStage(5);
         }
 
-    }, [jwt, game]);
+    }, [jwt, props.game]);
 
     // 0: no jwt, no game -> login
     // 1: jwt, no game -> team setup
@@ -93,7 +95,8 @@ export default function Admin() {
 
         if (res.status == 200) {
             // Populate game object per schema
-            setGame(res.data);
+            // setGame(res.data);
+            props.setGame(res.data);
         } else {
             console.log('Bad request.');
         }
@@ -108,7 +111,7 @@ export default function Admin() {
             url: Constants.URL + '/games/addpoints',
             headers: { 'x-auth-token': jwt },
             data: {
-                'game_id': game._id,
+                'game_id': props.game._id,
                 'team_id': teamId,
                 'points': points
             }
@@ -125,7 +128,7 @@ export default function Admin() {
 
     switch (stage) {
         case 0:
-            return <Login setJwt={setJwt} setGame={setGame} setStage={setStage} setJwtCookie={setJwtCookie}/>;
+            return <Login setJwt={setJwt} setGame={props.setGame} setStage={setStage} setJwtCookie={setJwtCookie}/>;
         case 1:
             return <TeamsSetup teams={teams} setTeams={setTeams} setStage={setStage}/>
         case 2:
@@ -133,9 +136,9 @@ export default function Admin() {
         case 3:
             return <SetupSummary teams={teams} course={course} setStage={setStage} submitGame={submitGame}/>
         case 4:
-            return <Controls game={gameRef.current} addPoints={addPoints} moveToNextHole={moveToNextHole}/>
+            return <Controls game={props.game} addPoints={addPoints} moveToNextHole={moveToNextHole}/>
         case 5:
-            return <Summary game={gameRef.current}/>
+            return <Summary game={props.game} admin={{ admin: true, jwt: jwt}}/>
     }
     
 }

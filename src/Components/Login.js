@@ -45,13 +45,13 @@ export default function Login(props) {
         <div className='login'>
             <Title title='Login'/>
 
-            <Dialogue title='Password' marginTop='15vh' content={
+            <Dialogue title='Password' marginTop='15vh' >
                 <TextInput 
                     type='password' 
                     placeholder='Enter'
                     onInput={onPasswordInput}
                 />
-            }/>
+            </Dialogue>
 
             <Button text='Submit' color={'var(--greenBright)'} spacing='26vh' onClick={loginRequest}/>
         </div>
