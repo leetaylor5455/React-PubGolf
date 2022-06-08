@@ -9,20 +9,28 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 
 let lastTeamIndex = 0;
+let currentHoleIndex = 0;
 
 export default function Setup(props) {
 
     const [teams, setTeams, teamsRef] = useState(props.teams);
 
+    const checkLastSlideComplete = (teamIndex) => {
+        if (teamIndex == lastTeamIndex && teamsRef.current[teamIndex].name) {
+            setTeams(prevState => [...prevState, { name: '' }]);
+        }
+    }
+
     const onTeamInput = (e) => {
         const index = parseInt(e.target.getAttribute('teamindex'));
+        currentHoleIndex = index;
         const input = e.target.value;
 
-        // If text is in final slide
-        if (input && index == lastTeamIndex) {
-            setTeams(prevState => { return [...prevState, { name: '' }] });
-            // pushTeamEntryDialogue(index+1);
-        }
+        // // If text is in final slide
+        // if (input && index == lastTeamIndex) {
+        //     setTeams(prevState => { return [...prevState, { name: '' }] });
+        //     // pushTeamEntryDialogue(index+1);
+        // }
 
         setTeams(prevState => {
             return [
@@ -36,6 +44,7 @@ export default function Setup(props) {
     // When teams state changes, update last index global var
     useEffect(() => {
         lastTeamIndex = teamsRef.current.length-1;
+        checkLastSlideComplete(currentHoleIndex);
         // setTeams(props.teams);
     }, [teams])
 
