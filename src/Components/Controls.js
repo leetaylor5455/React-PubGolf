@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import useState from 'react-usestateref';
 import Button from './Button';
 import HoleInfo from './HoleInfo';
+import HazardBanner from './HazardBanner';
+import RulesHandbook from './RulesHandbook';
 
 function ScoreControlItem(props) {
     const team = props.team;
@@ -40,6 +42,9 @@ export default function Controls(props) {
     return <div className='controls'>
             <HoleInfo hole={currentHole}/>
 
+            {currentHole.bunkerHazard ? <HazardBanner type='bunker'/> : <></>}
+            {currentHole.waterHazard ? <HazardBanner type='water'/> : <></>}
+
             <ScoreControls teams={props.game.teams} addPoints={props.addPoints}/>
             
             {(props.game.lastHole) 
@@ -47,8 +52,11 @@ export default function Controls(props) {
                 : <HoleInfo hole={nextHole}>
                     <div className='small-heading' style={{ marginLeft: 'var(--margin)'}}>Next</div>
                 </HoleInfo> }
+
+            <RulesHandbook />
             
 
-            <Button text={props.game.lastHole ? 'Finish Game' : 'Next Hole'} spacing='92px' color='var(--greenBright)' onClick={props.moveToNextHole}/>
+            <Button text={props.game.lastHole ? 'Finish Game' : 'Next Hole'} spacing='38px' color='var(--greenBright)' onClick={props.moveToNextHole}/>
+            <div style={{height: '100px'}}></div>
         </div>
 }

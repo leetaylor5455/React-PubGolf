@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Scoreboard from './Scoreboard';
 import HoleInfo from './HoleInfo';
+import HazardBanner from './HazardBanner';
+import RulesHandbook from './RulesHandbook';
 
 export default function LiveInfo(props) {
 
@@ -32,11 +34,20 @@ export default function LiveInfo(props) {
 
         <HoleInfo hole={currentHole}/>
 
+        {currentHole.bunkerHazard ? <HazardBanner type='bunker'/> : <></>}
+        {currentHole.waterHazard ? <HazardBanner type='water'/> : <></>}
+
+        {/* <HazardBanner type='water'/>
+        <HazardBanner type='bunker'/> */}
+
         <Scoreboard teams={teams}/>
         {(props.game.lastHole) 
             ? <div></div> 
             : <HoleInfo hole={nextHole}>
                 <div className='small-heading' style={{ marginLeft: 'var(--margin)'}}>Next</div>
             </HoleInfo> }
+
+        <RulesHandbook />
+        <div style={{height: '64px'}}></div>
     </div>
 }

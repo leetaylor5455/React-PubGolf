@@ -29,7 +29,7 @@ export default function HolesSetup(props) {
     const submitCourse = () => {
         console.log('submit course');
 
-        // Need to do it again since setCourse is async and we need to check length in next line
+        // Clean array of incomplete holes
         const cleaned = course.filter(hole => hole.location && hole.drink && hole.par);
 
         props.setCourse(cleaned);

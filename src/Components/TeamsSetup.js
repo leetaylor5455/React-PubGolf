@@ -89,7 +89,7 @@ export default function Setup(props) {
 
             </Swiper>
 
-            <Button text='safe' spacing='23vh' color={teamsRef.current.length > 2
+            <Button text='safe' spacing='23vh' color={(teamsRef.current.length > 2 && teamsRef.current[teamsRef.current.length-2].name)
                 ? 'var(--greenBright)'
                 : 'var(--greyLight)'
             }
