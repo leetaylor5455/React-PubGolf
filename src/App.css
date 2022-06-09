@@ -29,20 +29,22 @@ header {
 
 .title {
   display: inline-block;
-  margin-top: 54px;
+  margin-top: 46px;
   padding-left: var(--margin);
   padding-right: 10px;
-  font-size: 36px;
+  font-size: 32px;
   font-weight: bold;
   letter-spacing: -0.5%;
   border-bottom: 2px solid var(--greenBright);
 }
 
 .dialogue {
+  position: relative;
   background-color: var(--greyLight);
   margin-left: var(--margin);
   margin-right: var(--margin);
   border-radius: 8px;
+  z-index: 10;
 }
 
 .dialogue-title {
@@ -73,6 +75,7 @@ header {
 }
 
 .swipe-to-add {
+  position: relative;
   float: right;
   text-transform: uppercase;
   font-size: 16px;
@@ -82,6 +85,7 @@ header {
   margin-right: calc(var(--margin) + 5px);
   margin-top: 5px;
   border-top: 1px solid white;
+  transition: all 0.5s cubic-bezier(.05,.7,.36,1.01); 
 }
 
 .plus {
@@ -104,6 +108,7 @@ header {
   font-weight: 800;
   text-align: center;
   border-radius: 8px;
+  transition: 0.5s all cubic-bezier(.17,.64,.39,.89);
 }
 
 .par-select {
@@ -126,6 +131,7 @@ header {
   background-color: var(--greyDark);
   border-radius: 6px;
   flex-grow: 1;
+  transition: 0.3s all cubic-bezier(.17,.64,.39,.89);
 }
 
 .par-select-button:last-child { margin-right: 0 }

@@ -78,17 +78,18 @@ export default function Setup(props) {
                             key={'dialogue'+props.index}
                             title='New Team'>
 
-                                <TextInput key={'teaminput'+index} type='text' placeholder='Team Name' 
+                            <TextInput key={'teaminput'+index} type='text' placeholder='Team Name' 
                                 teamindex={index} onInput={onTeamInput} value={team.name}/>
                         
-                            </Dialogue>
-                        <SwipeToAdd />
+                        </Dialogue>
+
+                        <SwipeToAdd show={team.name ? true : false}/>
                     </SwiperSlide>
                 ))}
 
             </Swiper>
 
-            <Button text='safe' spacing='23vh' color={teamsRef.current.length >= 2
+            <Button text='safe' spacing='23vh' color={teamsRef.current.length > 2
                 ? 'var(--greenBright)'
                 : 'var(--greyLight)'
             }

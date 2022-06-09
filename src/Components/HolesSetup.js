@@ -108,7 +108,7 @@ export default function HolesSetup(props) {
                 spaceBetween={50}
                 // onSlideChange={() => console.log('slide change')}
                 // onSwiper={(swiper) => console.log(swiper)}
-                style={{ marginTop: '10vh' }}
+                style={{ marginTop: '6vh' }}
             >
 
                 {course.map((hole, index) => {
@@ -156,7 +156,7 @@ export default function HolesSetup(props) {
                             </div>
                             {/* <ParSelect key={'parselect'+index} holeindex={index}/> */}
                         </Dialogue>
-                        <SwipeToAdd/>
+                        <SwipeToAdd show={(hole.par && hole.location && hole.drink) ? true : false}/>
                     </SwiperSlide>
                     
                 )})}
