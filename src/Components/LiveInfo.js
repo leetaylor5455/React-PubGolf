@@ -6,20 +6,6 @@ import RulesHandbook from './RulesHandbook';
 
 export default function LiveInfo(props) {
 
-    useEffect(() => {
-        // Begin socket
-        props.ws.onopen = () => {
-            console.log('ws open')
-        }
-
-        props.ws.onmessage = (event) => {
-            const res = JSON.parse(event.data);
-            console.log(res);
-            props.setGame(res);
-            // setGame(res);
-        }
-    }, [])
-
     const [currentHole, setCurrentHole] = useState(props.game.currentHole);
     const [nextHole, setNextHole] = useState(props.game.nextHole);
     const [teams, setTeams] = useState(props.game.orderedTeams);

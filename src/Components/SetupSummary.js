@@ -31,7 +31,7 @@ export default function SetupSummary(props) {
             ))}
         </div>
 
-        <Button text='Start' color='var(--greenBright)' spacing='96px'
+        <Button loading={props.awaitingResponse} text='Start' color='var(--greenBright)' spacing='96px'
             onClick={() => { props.submitGame() }}
         />
         <Button text='Edit' color='var(--red)' spacing='38px'

@@ -41,20 +41,6 @@ export default function Admin(props) {
             }
         }
         verifyJwt(); 
-
-
-        // Begin socket
-        props.ws.onopen = () => {
-            console.log('ws open')
-        }
-
-        props.ws.onmessage = (event) => {
-            const res = JSON.parse(event.data);
-            console.log(res);
-            props.setGame(res);
-            // setGame(res);
-        }
-
     }, []);
 
     useEffect(() => {
@@ -79,8 +65,10 @@ export default function Admin(props) {
 
     const [teams, setTeams, teamsRef] = useState([{ name: '' }]);
     const [course, setCourse, courseRef] = useState([{ location: '', drink: '', par: 0, index: 0 }]);
+    const [awaitingGameCreateRes, setAwaitingGameCreateRes] = useState(false);
 
     const submitGame = async () => {
+        setAwaitingGameCreateRes(true);
         const res = await axios({
             method: 'POST',
             url: Constants.URL + '/games/newgame',
@@ -94,10 +82,12 @@ export default function Admin(props) {
         });
 
         if (res.status == 200) {
+            setAwaitingGameCreateRes(false);
             // Populate game object per schema
             // setGame(res.data);
             props.setGame(res.data);
         } else {
+            setAwaitingGameCreateRes(false);
             console.log('Bad request.');
         }
 
@@ -134,7 +124,7 @@ export default function Admin(props) {
         case 2:
             return <HolesSetup course={course} setCourse={setCourse} setStage={setStage}/>
         case 3:
-            return <SetupSummary teams={teams} course={course} setStage={setStage} submitGame={submitGame}/>
+            return <SetupSummary teams={teams} course={course} setStage={setStage} submitGame={submitGame} awaitingResponse={awaitingGameCreateRes}/>
         case 4:
             return <Controls game={props.game} addPoints={addPoints} moveToNextHole={moveToNextHole}/>
         case 5:

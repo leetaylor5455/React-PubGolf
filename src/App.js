@@ -22,8 +22,6 @@ const Constants = {
 
 export function App() {
 
-	let ws = new WebSocket('wss://node-pubgolf.herokuapp.com/');
-	// let ws = new WebSocket('ws://localhost:8080/');
 
 	const navigate = useNavigate();
 	const navigateToAdmin = useCallback(() => navigate('/admin', { replace: true }), [navigate])
@@ -41,7 +39,35 @@ export function App() {
 
 	const [game, setGame] = useState();
 
+
 	useEffect(() => {
+
+	const connect = () => {
+		let ws = new WebSocket('wss://node-pubgolf.herokuapp.com/');
+		// const ws = new WebSocket('ws://localhost:8080/');
+
+		ws.onopen = () => {
+			console.log('ws open');
+		}
+
+		ws.onmessage = (e) => {
+			const res = JSON.parse(e.data);
+			// console.log(res);
+			setGame(res);
+		}
+
+		ws.onclose = (e) => {
+			setTimeout(function() {
+				connect();
+			}, 1000);
+		}
+
+		ws.onerror = (err) => {
+			console.error(err.message);
+			ws.close();
+		}
+	}
+	connect();
 
 	const fetchGame = async () => {
 		try {
@@ -68,10 +94,10 @@ export function App() {
 				<Route path='/' element={
 				game 
 					? !game.complete
-					? <LiveInfo game={game} setGame={setGame} ws={ws}/> 
+					? <LiveInfo game={game} setGame={setGame}/> 
 					: <Summary game={game}/>
 				: <NoGame />}/>
-				<Route path='/admin' element={<Admin game={game} setGame={setGame} ws={ws}/>}/>
+				<Route path='/admin' element={<Admin game={game} setGame={setGame}/>}/>
 			</Routes>
 
 		</div>

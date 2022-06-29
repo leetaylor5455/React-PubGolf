@@ -27,7 +27,6 @@ export default function HolesSetup(props) {
     }
 
     const submitCourse = () => {
-        console.log('submit course');
 
         // Clean array of incomplete holes
         const cleaned = course.filter(hole => hole.location && hole.drink && hole.par);

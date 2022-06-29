@@ -1,4 +1,5 @@
 import React from 'react';
+import Loading from './loading.svg';
 
 export default function Button(props) {
     return (
@@ -6,7 +7,9 @@ export default function Button(props) {
             backgroundColor: props.color,
             marginTop: props.spacing
         }}>
-            {props.text}
+            {props.loading ? <div className='button-loading'>
+                <img src={Loading} alt='Loading Animation'/>
+            </div> : <div>{props.text}</div>}
         </div>
     )
 }

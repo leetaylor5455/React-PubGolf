@@ -88,6 +88,11 @@ header {
   transition: all 0.5s cubic-bezier(.05,.7,.36,1.01); 
 }
 
+.incorrect-password {
+  color: var(--red);
+  border-top: 1px solid var(--red); 
+}
+
 .plus {
   margin: auto;
   font-size: 64px;
@@ -101,7 +106,9 @@ header {
   /* position: fixed;
   bottom: 10vh; */
   margin: var(--margin);
-  padding: 16px 0 20px 0;
+  /* padding: 16px 0 20px 0; */
+  height: 67px;
+  line-height: 64px;
   width: calc(100% - var(--margin)*2);
   text-transform: uppercase;
   font-size: 24px;
@@ -109,6 +116,21 @@ header {
   text-align: center;
   border-radius: 8px;
   transition: 0.5s all cubic-bezier(.17,.64,.39,.89);
+}
+
+.button-loading img {
+  height: 50px;
+  margin-top: 8px;
+  animation: rotation 1.5s infinite linear;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
 }
 
 .par-select {
