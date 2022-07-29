@@ -21,42 +21,43 @@ export default function Login(props) {
     }
 
     const loginRequest = async () => {
-
-        setAwaitingResponse(true);
-        const res = await axios({
-            method: 'POST',
-            url: Constants.URL + '/auth',
-            data: {
-                username: 'main',
-                password: password
-            }
-        }).catch(function (error) {
-            setResStatus(error.response.status);
-            setPassword('');
-            passwordInputRef.current.value = '';
-            setAwaitingResponse(false);
-            if (error.response) return console.log('Error in request.');
-            if (error.request) return console.log('No response received.');
-        });
-
-        try {
-            if (res.data.jwt) {
-                setAwaitingResponse(false);
-                // Save jwt as cookie
-                props.setJwtCookie(res.data.jwt);
-    
-                if (res.data.game) {
-                    // jwt and game return -> stage 4: in progress
-                    props.setStage(4);
-                    return props.setGame(res.data.game);
+        if (password) {
+            setAwaitingResponse(true);
+            const res = await axios({
+                method: 'POST',
+                url: Constants.URL + '/auth',
+                data: {
+                    username: 'main',
+                    password: password
                 }
+            }).catch(function (error) {
+                setResStatus(error.response.status);
+                setPassword('');
+                passwordInputRef.current.value = '';
+                setAwaitingResponse(false);
+                if (error.response) return console.log('Error in request.');
+                if (error.request) return console.log('No response received.');
+            });
     
-                // Just jwt returned -> stage 2: teams setup
-                props.setStage(1);
-                return props.setJwt(res.data.jwt);
+            try {
+                if (res.data.jwt) {
+                    setAwaitingResponse(false);
+                    // Save jwt as cookie
+                    props.setJwtCookie(res.data.jwt);
+        
+                    if (res.data.game) {
+                        // jwt and game return -> stage 4: in progress
+                        props.setStage(4);
+                        return props.setGame(res.data.game);
+                    }
+        
+                    // Just jwt returned -> stage 2: teams setup
+                    props.setStage(1);
+                    return props.setJwt(res.data.jwt);
+                }
+            } catch {
+                console.log('No data.')
             }
-        } catch {
-            console.log('No data.')
         }
     }
 
@@ -76,7 +77,12 @@ export default function Login(props) {
                 <IncorrectPassword show={ (resStatus === 401 && !password) ? true : false }/>
             </div>
 
-            <Button loading={awaitingResponse} text='Submit' color={ password ? 'var(--greenBright)' : 'var(--greyLight)'} spacing='26vh' onClick={loginRequest}/>
+            <Button loading={awaitingResponse} 
+                text='Submit' 
+                color={ password ? 'var(--greenBright)' : 'var(--greyLight)'} 
+                spacing='26vh' 
+                onClick={loginRequest}
+            />
         </div>
     )
 }

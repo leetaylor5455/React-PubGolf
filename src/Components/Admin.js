@@ -45,12 +45,13 @@ export default function Admin(props) {
 
     useEffect(() => {
         if (jwt && !props.game) setStage(1);
-        if (jwt && props.game && !props.game.complete) {
-            setStage(4);
-        }
 
-        if (props.game) {
-            if (props.game.complete) setStage(5);
+        if (jwt && props.game) {
+            if (!props.game.complete) {
+                setStage(4);
+            } else {
+                setStage(5);
+            }
         }
 
     }, [jwt, props.game]);
@@ -108,6 +109,19 @@ export default function Admin(props) {
         });
     }
 
+    const setScored = (teamId, scored) => {
+        axios({
+            method: 'POST',
+            url: Constants.URL + '/games/setscored',
+            headers: { 'x-auth-token': jwt },
+            data: {
+                'game_id': props.game._id,
+                'team_id': teamId,
+                'scored': scored
+            }
+        })
+    }
+
     const moveToNextHole = () => {
         axios({
             method: 'GET',
@@ -126,7 +140,7 @@ export default function Admin(props) {
         case 3:
             return <SetupSummary teams={teams} course={course} setStage={setStage} submitGame={submitGame} awaitingResponse={awaitingGameCreateRes}/>
         case 4:
-            return <Controls game={props.game} addPoints={addPoints} moveToNextHole={moveToNextHole}/>
+            return <Controls game={props.game} setStage={setStage} addPoints={addPoints} setScored={setScored} moveToNextHole={moveToNextHole}/>
         case 5:
             return <Summary game={props.game} admin={{ admin: true, jwt: jwt}}/>
     }

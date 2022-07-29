@@ -16,6 +16,17 @@
 html {
   background-color: var(--bg);
   color: var(--text);
+  -webkit-tap-highlight-color: transparent;
+}
+
+:not(input) {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                        supported by Chrome, Edge, Opera and Firefox */
 }
 
 .App {
@@ -116,6 +127,7 @@ header {
   text-align: center;
   border-radius: 8px;
   transition: 0.5s all cubic-bezier(.17,.64,.39,.89);
+  cursor: pointer;
 }
 
 .button-loading img {
@@ -175,6 +187,7 @@ header {
   border-radius: 8px;
   padding: 10px 12px 15px 12px;
   margin-bottom: 16px;
+  overflow: auto;
 }
 
 .summary-hole-item {
@@ -185,7 +198,7 @@ header {
 }
 
 .summary-hole-item-number {
-  width: 42px;
+  min-width: 42px;
   text-align: center;
   line-height: 86px;
   font-size: 36px;
@@ -197,6 +210,8 @@ header {
 
 .summary-hole-item-middle {
   margin-top: 14px;
+  overflow: auto;
+  margin-right: 10px;
 }
 
 .summary-hole-item-info {
@@ -251,6 +266,8 @@ header {
   flex-grow: 1;
   text-align: right;
   line-height: 34px;
+  overflow: auto;
+  margin-left: 50px;
 }
 
 .score-controls {
@@ -263,19 +280,34 @@ header {
   min-height: 64px;
   border-radius: 8px;
   margin-bottom: 18px;
+  overflow: hidden;
+}
+
+.score-control-item-active {
+  display: flex;
+}
+
+.score-control-item-inactive {
+  display: flex;
+  width: 100%;
+  background-color: var(--greyDark);
 }
 
 .score-control-item-position {
   font-size: 24px;
   line-height: 64px;
   font-weight: bold;
-  margin-left: 8px;
+  padding-left: 8px;
+  padding-right: 8px;
+  background-color: var(--greyDark);
 }
 
 .score-control-item-name {
   font-size: 22px;
   line-height: 64px;
   margin-left: 12px;
+  overflow: auto;
+  margin-right: 10px;
 }
 
 .score-control-item-controls {
@@ -287,6 +319,13 @@ header {
   font-weight: bold;
   line-height: 64px;
   margin-right: 10px;
+}
+
+.score-control-item-score {
+  font-size: 28px;
+  font-weight: bold;
+  line-height: 64px;
+  float: right;
 }
 
 .score-control-item-plus, .score-control-item-minus {
@@ -324,6 +363,12 @@ header {
   border-radius: 8px;
   padding: 0 12px;
   margin-bottom: 18px;
+}
+
+.scoreboard-name {
+  overflow: auto;
+  margin-right: 12px;
+  line-height: 55px;
 }
 
 .scoreboard-item:first-child {
