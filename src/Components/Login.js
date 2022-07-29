@@ -42,18 +42,17 @@ export default function Login(props) {
             try {
                 if (res.data.jwt) {
                     setAwaitingResponse(false);
-                    // Save jwt as cookie
+                    
+                    console.log('set jwt')
+                    props.setJwt(res.data.jwt);
                     props.setJwtCookie(res.data.jwt);
         
                     if (res.data.game) {
                         // jwt and game return -> stage 4: in progress
                         props.setStage(4);
                         return props.setGame(res.data.game);
-                    }
-        
-                    // Just jwt returned -> stage 2: teams setup
-                    props.setStage(1);
-                    return props.setJwt(res.data.jwt);
+                    }                    
+                    return;
                 }
             } catch {
                 console.log('No data.')

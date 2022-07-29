@@ -14,7 +14,6 @@ const cookies = new Cookies();
 export default function Admin(props) {
 
     const [jwt, setJwt] = useState('');
-    // const [game, setGame, gameRef] = useState(props.game);
 
     const setJwtCookie = (jwt) => {
         cookies.set('jwt', jwt);
@@ -55,6 +54,10 @@ export default function Admin(props) {
         }
 
     }, [jwt, props.game]);
+
+    useEffect(() => {
+        console.log('jwt set');
+    }, [jwt])
 
     // 0: no jwt, no game -> login
     // 1: jwt, no game -> team setup
