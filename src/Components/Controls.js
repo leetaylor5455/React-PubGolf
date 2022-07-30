@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import useState from 'react-usestateref';
-import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import Button from './Button';
 import HoleInfo from './HoleInfo';
 import HazardBanner from './HazardBanner';
