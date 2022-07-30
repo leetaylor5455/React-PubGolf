@@ -33,27 +33,27 @@ export default function RulesHandbook() {
         }>
             <div className='rules-content-item' style={childStyle}>
                 <div className='rules-content-name'>Spillage</div>
-                <div className='rules-content-penalty'>+2</div>
+                <div className='rules-content-penalty'>+1</div>
             </div>
             <div className='rules-content-item'style={childStyle}>
                 <div className='rules-content-name'>Piss on Water Hazard</div>
                 <div className='rules-content-penalty'>+3</div>
             </div>
             <div className='rules-content-item'style={childStyle}>
-                <div className='rules-content-name'>Bunker Refusal</div>
-                <div className='rules-content-penalty'>+3</div>
+                <div className='rules-content-name'>Falling Over</div>
+                <div className='rules-content-penalty'>+2</div>
             </div>
             <div className='rules-content-item'style={childStyle}>
-                <div className='rules-content-name'>Carry Item Damage</div>
-                <div className='rules-content-penalty'>+7</div>
+                <div className='rules-content-name'>Miss Hole</div>
+                <div className='rules-content-penalty'>+2</div>
             </div>
             <div className='rules-content-item'style={childStyle}>
-                <div className='rules-content-name'>Carry Item Loss</div>
-                <div className='rules-content-penalty'>+14</div>
+                <div className='rules-content-name'>Cheating</div>
+                <div className='rules-content-penalty'>+5</div>
             </div>
             <div className='rules-content-item'style={childStyle}>
-                <div className='rules-content-name'>Stranger to Down Drink</div>
-                <div className='rules-content-penalty'>-4</div>
+                <div className='rules-content-name'>Chunder</div>
+                <div className='rules-content-penalty'>+10</div>
             </div>
             <div className='rules-content-item'style={childStyle}>
                 <div className='rules-content-name'>Head Shave</div>
