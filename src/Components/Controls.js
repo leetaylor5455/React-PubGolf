@@ -22,10 +22,10 @@ function ScoreControlItem(props) {
 
     if (team.scored) {
         initialSlide = 0;
-        swiperRef.current?.swiper.slideTo(0);
+        // swiperRef.current?.swiper.slideTo(0);
     } else {
         initialSlide = 1;
-        swiperRef.current?.swiper.slideTo(1);
+        // swiperRef.current?.swiper.slideTo(1);
     }
 
     return <Swiper className='score-control-item' ref={swiperRef} initialSlide={initialSlide}
